@@ -1,6 +1,7 @@
 import { ExemplarLivro } from "../entity/ExemplarLivro";
 import { ExemplarLivroRepository } from "../Repository/ExemplarLivroRepository";
 import { LivroService } from "./LivroService";
+import { Livro } from "../entity/Livro";
 
 export class ExemplarLivroService {
     private repository: ExemplarLivroRepository;
@@ -19,6 +20,8 @@ export class ExemplarLivroService {
         }
 
         const exemplar = new ExemplarLivro(livro);
+        livro.quantidadeExemplares = (livro.quantidadeExemplares ?? 0) + 1;
+        await this.livroService.atualizar(livro.id, livro);
         return await this.repository.criar(exemplar);
     }
 

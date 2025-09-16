@@ -17,23 +17,23 @@ export class Livro {
   private _anoPublicacao: number;
 
   @Column ({name: "quantidadeExemplares", default: 0})
-  private _quantidadeExemplares: number;
+  private _quantidadeExemplares!: number;
 
   @ManyToOne(() => Autor, (autor) => autor.livros, { eager: true })
   @JoinColumn({ name: 'autor_id' })
   private _autor: Autor;
 
   @OneToMany(() => ExemplarLivro, (exemplar) => exemplar.livro)
-  private _exemplares: ExemplarLivro[];
+  private _exemplares!: ExemplarLivro[];
 
 
-  constructor(titulo: string, isbn: string, ano: number, autor: Autor, exemplares: ExemplarLivro[]) {
+  constructor(titulo: string, isbn: string, ano: number, autor: Autor) {
     this._titulo = titulo;
     this._isbn = isbn;
     this._anoPublicacao = ano;
     this._autor = autor;
-    this._exemplares = exemplares;
-    this._quantidadeExemplares = exemplares.length ;
+    //this._exemplares = exemplares;
+    //this._quantidadeExemplares = exemplares.length ;
   }
 
   get id(): number {
@@ -97,10 +97,10 @@ export class Livro {
     this._quantidadeExemplares = quantidade;
   }
 
-  calcularQuantidadeExemplares(): number {
-  this._quantidadeExemplares = this._exemplares ? this._exemplares.length : 0;
-  return this._quantidadeExemplares;
-}
   
+  adicionarExemplar(exemplar: ExemplarLivro): void {
+    this._exemplares.push(exemplar)
+    this._quantidadeExemplares = this._exemplares.length
+  }
 }
 

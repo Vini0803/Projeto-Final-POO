@@ -16,7 +16,7 @@ export class LivroService {
     const autor = await this.autorService.buscar(autorID);
     if (!autor) throw new Error("Autor nao cadastrado/encontrado");
 
-    const livro = new Livro(titulo, isbn, ano, autor, exemplares);
+    const livro = new Livro(titulo, isbn, ano, autor);
     return await this.repository.criar(livro);
   }
 
