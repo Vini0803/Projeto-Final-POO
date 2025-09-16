@@ -4,6 +4,7 @@ import AutorRouter from "./route/AutorRouter";
 import LivroRouter from "./route/LivroRouter"
 import UsuarioRouter from "./route/UsuarioRouter";
 import ExemplarLivroRouter from "./route/ExemplarLivroRouter"
+import EmprestimoRouter from "./route/EmprestimoRouter";
 
 const minhaAPI = express();
 minhaAPI.use(express.json());
@@ -12,7 +13,8 @@ minhaAPI.use(express.json());
 minhaAPI.use('/autor', AutorRouter);
 minhaAPI.use('/livro', LivroRouter);
 minhaAPI.use('/usuario', UsuarioRouter)
-//minhaAPI.use('/exemplar', ExemplarLivroRouter)
+minhaAPI.use('/exemplar', ExemplarLivroRouter)
+minhaAPI.use('/emprestimo', EmprestimoRouter)
 
 const porta = 3000;
 

@@ -16,16 +16,11 @@ export class Livro {
   @Column({ name: "ano_publicacao" })
   private _anoPublicacao: number;
 
-  @Column({ name: "disponivel", default: true })
-  private _disponivel: boolean;
-
-
   @ManyToOne(() => Autor, (autor) => autor.livros, { eager: true })
   @JoinColumn({ name: 'autor_id' })
   private _autor: Autor;
 
-  @OneToMany(() => ExemplarLivro, (exemplar) => exemplar.livro, { eager: true })
-  @JoinColumn({ name: 'exemplar_id' } )
+  @OneToMany(() => ExemplarLivro, (exemplar) => exemplar.livro)
   private _exemplares: ExemplarLivro[];
 
 
@@ -34,7 +29,6 @@ export class Livro {
     this._isbn = isbn;
     this._anoPublicacao = ano;
     this._autor = autor;
-    this._disponivel = true;
     this._exemplares = exemplares;
   }
 
@@ -72,13 +66,6 @@ export class Livro {
     this._anoPublicacao = anoPublicacao;
   }
 
-  get disponivel(): boolean {
-    return this._disponivel;
-  }
-  set disponivel(disponivel: boolean) {
-    this._disponivel = disponivel;
-  }
-
   get autor(): Autor {
     return this._autor;
   }
@@ -92,6 +79,7 @@ export class Livro {
   }
 
   get exemplares(): ExemplarLivro[] {
-    return this._exemplares;
+   return this._exemplares;
   }
 }
+

@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from "typeorm";
 import { Livro } from "./Livro"
 import { Emprestimo} from "./Emprestimo"
-
 
 @Entity()
 export class ExemplarLivro {
@@ -15,13 +14,10 @@ export class ExemplarLivro {
   @JoinColumn({ name: 'livro_id' })
   private _livro: Livro;
 
-  @OneToOne(() => Emprestimo, (emprestimo) => emprestimo.exemplar)
-  @JoinColumn({ name: 'emprestimo_id' })
-  private _emprestimo!: Emprestimo;
 
   constructor(livro: Livro) {
     this._livro = livro;
-    this._disponivel = true
+    this._disponivel = true;
   }
 
   get id(): number {
@@ -31,6 +27,7 @@ export class ExemplarLivro {
   get disponivel(): boolean {
     return this._disponivel;
   }
+  
   set disponivel(disponivel: boolean) {
     this._disponivel = disponivel;
   }
@@ -43,7 +40,4 @@ export class ExemplarLivro {
     this._livro = livro;
   }
   
-  get emprestimo(): Emprestimo {
-    return this._emprestimo;
-  }
 }

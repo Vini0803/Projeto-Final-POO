@@ -16,7 +16,7 @@ export class Emprestimo {
     @Column({ name: "data_DevolucaoReal", type: "date", nullable: true })
     private _dataDevolucaoReal: Date | null;
 
-    @OneToOne(() => ExemplarLivro, (exemplar) => exemplar.emprestimo, { eager: true })
+    @ManyToOne(() => ExemplarLivro, { eager: true })
     @JoinColumn({ name: 'exemplar_id' })
     private _exemplar: ExemplarLivro;
 
