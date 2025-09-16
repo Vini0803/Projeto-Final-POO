@@ -16,6 +16,9 @@ export class Livro {
   @Column({ name: "ano_publicacao" })
   private _anoPublicacao: number;
 
+  @Column ({name: "quantidadeExemplares", default: 0})
+  private _quantidadeExemplares: number;
+
   @ManyToOne(() => Autor, (autor) => autor.livros, { eager: true })
   @JoinColumn({ name: 'autor_id' })
   private _autor: Autor;
@@ -30,6 +33,7 @@ export class Livro {
     this._anoPublicacao = ano;
     this._autor = autor;
     this._exemplares = exemplares;
+    this._quantidadeExemplares = exemplares.length ;
   }
 
   get id(): number {
@@ -81,5 +85,22 @@ export class Livro {
   get exemplares(): ExemplarLivro[] {
    return this._exemplares;
   }
+
+  get quantidadeExemplares(): number {
+    return this._quantidadeExemplares;
+  }
+
+  set quantidadeExemplares(quantidade: number) {
+    if (quantidade < 0) {
+      throw new Error("A quantidade de exemplares não pode ser negativa.");
+    }
+    this._quantidadeExemplares = quantidade;
+  }
+
+  calcularQuantidadeExemplares(): number {
+  this._quantidadeExemplares = this._exemplares ? this._exemplares.length : 0;
+  return this._quantidadeExemplares;
+}
+  
 }
 

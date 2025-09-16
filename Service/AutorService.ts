@@ -22,11 +22,11 @@ export class AutorService {
   }
 
   async atualizar(id: number, nome?: string, nacionalidade?: string): Promise<Autor> {
-    const participante = await this.repository.buscarPorId(id);
-    if (!participante) throw new Error("Música não encontrada");
-    if (nome !== undefined) participante.nome = nome;  
-    if (nacionalidade !== undefined) participante.nacionalidade = nacionalidade; 
-    return await this.repository.atualizar(participante);
+    const autor = await this.repository.buscarPorId(id);
+    if (!autor) throw new Error("Autor não encontrado");
+    if (nome !== undefined) autor.nome = nome;  
+    if (nacionalidade !== undefined) autor.nacionalidade = nacionalidade; 
+    return await this.repository.atualizar(autor);
   }
 
 
