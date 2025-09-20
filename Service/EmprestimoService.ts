@@ -33,8 +33,11 @@ export class EmprestimoService {
 
     if (!exemplar.disponivel) throw new Error("esse exemplar nao esta disponivel")
 
-    const emprestimo = new Emprestimo(exemplar, usuario);
+    
+  
     exemplar.disponivel = false;
+
+    const emprestimo = new Emprestimo(exemplar, usuario);
     return await this.repository.criar(emprestimo);
   }
 

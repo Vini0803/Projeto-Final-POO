@@ -7,13 +7,14 @@ export class EmprestimoController {
     private exemplarLivroService: ExemplarLivroService;
 
     constructor() {
-        this.emprestimoService = new EmprestimoService;
+        this.emprestimoService = new EmprestimoService();
         this.exemplarLivroService = new ExemplarLivroService();
     }
 
     async criar(req: Request, res: Response): Promise<Response> {
     try {
-        const { exemplarId, usuarioId } = req.body; // IDs em vez de objetos
+        const exemplarId = Number(req.body.exemplarId);
+        const usuarioId  = Number(req.body.usuarioId);
         
         // Buscar o exemplar pelo ID
         const exemplar = await this.exemplarLivroService.buscar(exemplarId);
@@ -21,7 +22,7 @@ export class EmprestimoController {
             return res.status(404).json({ message: 'Exemplar não encontrado.' });
         }
         
-        const novo = await this.emprestimoService.cadastrar(exemplar, usuarioId);
+        const novo = await this.emprestimoService.cadastrar(exemplarId, usuarioId);
         return res.status(201).json(novo);
     } catch (error: any) {
         return res.status(400).json({ message: 'Erro ao criar empréstimo.', error: error.message });
