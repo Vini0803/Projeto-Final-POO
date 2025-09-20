@@ -29,6 +29,4 @@ export class ExemplarLivroRepository {
     async remover(id: number): Promise<void> {
         await this.repositorio.delete(id);
     }
-
-    async incrementarExemplar(id: number,  )
 }

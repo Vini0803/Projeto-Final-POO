@@ -3,28 +3,38 @@ import { EmprestimoRepository } from "../Repository/EmprestimoRepository";
 import { UsuarioService } from "./UsuarioService";
 import { ExemplarLivro } from "../entity/ExemplarLivro";
 import { Usuario } from "../entity/Usuario";
+import { ExemplarLivroService } from "./ExemplarLivroService";
 
 
 
 export class EmprestimoService {
   private repository: EmprestimoRepository;
   private usuarioService: UsuarioService;
+  private exemplarService: ExemplarLivroService;
 
   constructor() {
     this.repository = new EmprestimoRepository();
     this.usuarioService = new UsuarioService;
+    this.exemplarService = new ExemplarLivroService;
 
   }
 
-  async cadastrar(exemplar: ExemplarLivro, usuarioID: number): Promise<Emprestimo> {
+  async cadastrar(exemplarId: number, usuarioID: number): Promise<Emprestimo> {
     // eu tenho que verificar se o usuario tem um EMPRESTIMO
 
     const usuario = await this.usuarioService.buscar(usuarioID);
+    const exemplar = await this.exemplarService.buscar(exemplarId);
+
     if (!usuario) throw new Error("Usuario nao existe");
 
-    if (usuario.emprestimo) throw new Error("Esse usuario ja tem um emprestimo") 
+    if (!exemplar) throw new Error("Esse exemplar nao existe")
+
+    if (usuario.emprestimo) throw new Error("Esse usuario ja tem um emprestimo")
+
+    if (!exemplar.disponivel) throw new Error("esse exemplar nao esta disponivel")
 
     const emprestimo = new Emprestimo(exemplar, usuario);
+    exemplar.disponivel = false;
     return await this.repository.criar(emprestimo);
   }
 

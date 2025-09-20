@@ -50,4 +50,24 @@ export class LivroService {
     if (!livro) throw new Error("Livro não encontrado");
     await this.repository.remover(id);
   }
+
+  async incrementarQntdExemplares(livroId: number): Promise<void>{
+    const livro = await this.repository.buscarPorId(livroId);
+    if (!livro) {throw new Error("Livro nao encontrado");}
+
+    livro.quantidadeExemplares = livro.quantidadeExemplares + 1;
+
+    await this.repository.atualizar(livro);
+  }
+
+  async decrementarExemplares(livroId: number): Promise<void> {
+  const livro = await this.repository.buscarPorId(livroId);
+  if (!livro) throw new Error("Livro não encontrado");
+  
+  if (livro.quantidadeExemplares > 0) {
+    livro.quantidadeExemplares = livro.quantidadeExemplares - 1;
+    await this.repository.atualizar(livro);
+    }
+  }
+
 }

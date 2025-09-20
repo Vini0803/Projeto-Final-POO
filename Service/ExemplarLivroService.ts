@@ -19,8 +19,15 @@ export class ExemplarLivroService {
             throw new Error("Livro não encontrado com o ID fornecido.");
         }
 
-        this.incrementarExemplar()
-        return await this.repository.criar(exemplar);
+        const exemplar = new ExemplarLivro(livro);
+        const novoExemplar = await this.repository.criar(exemplar);
+
+
+        await this.livroService.incrementarQntdExemplares(livroId);
+
+
+        return novoExemplar;
+
     }
 
     async listarTodos(): Promise<ExemplarLivro[]> {
@@ -46,8 +53,8 @@ export class ExemplarLivroService {
         return await this.repository.atualizar(exemplar);
     }
 
-    async excluir(id: number): Promise<void> {
-        const exemplar = await this.repository.buscarPorId(id);
+    async excluir(idExemplar: number, idLivro: number): Promise<void> {
+        const exemplar = await this.repository.buscarPorId(idExemplar);
         if (!exemplar) {
             throw new Error("Exemplar não encontrado");
         }
@@ -56,13 +63,19 @@ export class ExemplarLivroService {
         if (!exemplar.disponivel) {
             throw new Error("Não é possível excluir um exemplar que está emprestado");
         }
+
+        const livro = await this.livroService.buscar(idLivro);
+        if (!livro) {
+            throw new Error("Livro nao encontrado")
+        }
+
+        if (exemplar.livro.id !== livro.id){
+            throw new Error("O exemplar informado nao pertence a esse livro");
+        }
+
         
-        return await this.repository.remover(id);
-    }
-
-
-    async incrementarQntdExemplar(){
-        //
+        this.livroService.decrementarExemplares(idLivro);
+        return await this.repository.remover(idExemplar);
     }
     
 }

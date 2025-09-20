@@ -19,6 +19,11 @@ export class Livro {
   @Column ({name: "quantidadeExemplares", default: 0})
   private _quantidadeExemplares!: number;
 
+  @Column ({name: "ExemplaresDisponiveis", default: 0})
+  private _exemplaresDisponiveis!: number;
+
+
+
   @ManyToOne(() => Autor, (autor) => autor.livros, { eager: true })
   @JoinColumn({ name: 'autor_id' })
   private _autor: Autor;
@@ -32,8 +37,7 @@ export class Livro {
     this._isbn = isbn;
     this._anoPublicacao = ano;
     this._autor = autor;
-    //this._exemplares = exemplares;
-    this._quantidadeExemplares;
+    this._quantidadeExemplares = 0;
   }
 
   get id(): number {
