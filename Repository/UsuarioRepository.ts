@@ -21,6 +21,8 @@ export class UsuarioRepository {
         return await this.repositorio.findOneBy({ _id: id } as any);
     }
 
+
+
     async atualizar(usuario: Usuario): Promise<Usuario> {
         return await this.repositorio.save(usuario);
     }
