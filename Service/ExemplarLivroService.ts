@@ -19,9 +19,7 @@ export class ExemplarLivroService {
             throw new Error("Livro não encontrado com o ID fornecido.");
         }
 
-        const exemplar = new ExemplarLivro(livro);
-        livro.quantidadeExemplares = (livro.quantidadeExemplares ?? 0) + 1;
-        await this.livroService.atualizar(livro.id, livro);
+        this.incrementarExemplar()
         return await this.repository.criar(exemplar);
     }
 
@@ -61,4 +59,10 @@ export class ExemplarLivroService {
         
         return await this.repository.remover(id);
     }
+
+
+    async incrementarQntdExemplar(){
+        //
+    }
+    
 }

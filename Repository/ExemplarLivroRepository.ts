@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { ExemplarLivro } from "../entity/ExemplarLivro";
 import { banco } from "../banco";
+import { Livro } from '../entity/Livro';
 
 export class ExemplarLivroRepository {
     private repositorio!: Repository<ExemplarLivro>
@@ -29,5 +30,5 @@ export class ExemplarLivroRepository {
         await this.repositorio.delete(id);
     }
 
-
+    async incrementarExemplar(id: number,  )
 }

@@ -33,7 +33,7 @@ export class Livro {
     this._anoPublicacao = ano;
     this._autor = autor;
     //this._exemplares = exemplares;
-    //this._quantidadeExemplares = exemplares.length ;
+    this._quantidadeExemplares;
   }
 
   get id(): number {
